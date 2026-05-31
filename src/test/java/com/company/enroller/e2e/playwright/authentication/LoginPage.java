@@ -8,16 +8,19 @@ import lombok.Getter;
 
 public class LoginPage extends BasePage {
 
-//    private final Locator loginBtn;
-//    private final Locator loginInput;
+    private final Locator loginBtn;
+    private final Locator loginInput;
 //    private final Locator loginLabel;
 //    private final Locator welcomeLabel;
 
+
     public LoginPage(Page page) {
         super(page);
-
+        this.loginBtn = page.locator("button[type='button']");
+        this.loginInput = page.locator("input[type='text']");
     }
 
+    public void loginAs(String user){}
 
 
 }

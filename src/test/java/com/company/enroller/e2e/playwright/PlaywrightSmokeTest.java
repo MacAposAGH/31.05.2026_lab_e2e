@@ -13,8 +13,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@ActiveProfiles("test")
 class PlaywrightSmokeTest {
 
-    public static void main(String[] args) {
+    @Test
+    public  void test() {
         String page_url = "https://www.saucedemo.com/";
+        Playwright playwright = Playwright.create();
+        Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+
+        Page page = browser.newPage();
+        page.navigate(page_url);
+
+        page.locator("#user-name").fill("standard_user");
+        page.locator("#password").fill("secret_sauce");
+
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException ignored) {}
 
     }
 }

@@ -11,9 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.regex.Pattern;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static com.company.enroller.e2e.Const.*;
 
 
 public class LoginTests extends BaseTests {
@@ -25,11 +23,18 @@ public class LoginTests extends BaseTests {
 
     @BeforeEach
     void setUp() {
+        dbInit();
+        playwright = Playwright.create();
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+        page = browser.newPage();
+        loginPage = new LoginPage(page);
+        loginPage.get(HOME_PAGE);
     }
 
     @Test
     @DisplayName("[LOGOWANIE.1] No login, system should not confirm the user")
     void emptyLoginName() {
+        this.loginPage.loginAs(USER_I_NAME);
     }
 
     @Test
@@ -41,6 +46,14 @@ public class LoginTests extends BaseTests {
 
     @AfterEach
     void exit() {
+    }
+
+    public void sleep(int seconds){
+        try {
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
